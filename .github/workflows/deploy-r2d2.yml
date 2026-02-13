@@ -32,6 +32,7 @@ jobs:
           EOF
 
       - run: npm ci
+      - run: npm install -g @nestjs/cli
       - run: npm run build
       - run: npm run migration:run:prod
       - run: pm2 restart fambord-api || pm2 start dist/main.js --name fambord-api
