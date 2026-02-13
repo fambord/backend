@@ -13,8 +13,8 @@ export class AppController {
   getHello() {
     return {
       timestamp: new Date().toISOString(),
-      greeting: 'Welcome to the famboard API!',
-      message: 'This is the backend API for famboard app.',
+      greeting: 'Welcome to the fambord API!',
+      message: 'This is the backend API for fambord app.',
       environment: process.env.NODE_ENV || 'development',
       docsURL: 'v1/swagger',
       endpoints: {
