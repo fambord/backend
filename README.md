@@ -1,4 +1,4 @@
-# FamBoard - Backend
+# Fambord - Backend
 
 A backend REST API that provides CRUD operations on a postgres database.
 

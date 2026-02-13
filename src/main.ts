@@ -13,7 +13,7 @@ async function bootstrap() {
   // Enable URI versioning with default version
   app.enableVersioning({
     type: VersioningType.URI,
-    defaultVersion: '1', // Set default version
+    defaultVersion: '1',
   });
 
   // Enable CORS
@@ -26,8 +26,8 @@ async function bootstrap() {
 
   // Set config for swagger
   const config = new DocumentBuilder()
-    .setTitle('Famboard API')
-    .setDescription('This is the backend API for famboard app.')
+    .setTitle('Fambord API Documentation')
+    .setDescription('This is the API documentation for fambord app.')
     .setVersion('1.0')
     .build();
 
