@@ -1,0 +1,57 @@
+# Fambord Backend - Windsurf Rules
+
+## Project Context
+- NestJS REST API with TypeORM and PostgreSQL
+- JWT authentication with Passport
+- Swagger/OpenAPI documentation on all endpoints
+- URI versioning with default version 1
+
+## Code Style
+- Use kebab-case for file names (e.g., task-assignments.service.ts)
+- Use PascalCase for classes, camelCase for methods/variables
+- Always use constructor injection for dependencies
+- Inject repositories with @InjectRepository()
+- Keep services focused on business logic, controllers thin
+
+## Module Structure
+- Every module follows: module.ts, controller.ts, service.ts, dto/, entities/
+- DTOs use class-validator decorators (@IsString, @IsNotEmpty, etc.)
+- Entities use TypeORM decorators with uuid primary keys
+- All entities include createdAt/updatedAt timestamps
+- Update DTOs extend PartialType(CreateDto)
+
+## API Conventions
+- All controllers use @ApiTags and @ApiOperation decorators
+- All endpoints return consistent response shapes
+- Use NestJS built-in exceptions (NotFoundException, ConflictException, etc.)
+- Never expose passwords or sensitive data in responses
+
+## Database
+- Use TypeORM migrations, never synchronize in production
+- Migration commands: npm run migration:run, npm run migration:revert
+- Data source config: src/config/data-source.ts
+- Prefer find() with options over raw queries
+
+## Auth
+- JWT strategy in src/modules/auth/jwt.strategy.ts
+- RolesGuard in src/modules/auth/guards/roles.guard.ts
+- User groups: admin, parent, kid, guest (UserGroup enum)
+
+## Testing
+- Jest for unit and e2e tests
+- Test files use .spec.ts suffix
+- Mock repositories in unit tests
+- E2E tests in test/ directory
+
+## Git Workflow
+- Feature branches merge into development
+- development merges into r2d2 (test server deploy)
+- CI runs on development pushes and r2d2 PRs
+- Deploy triggers on r2d2 merge via self-hosted runner
+
+## Do NOT
+- Add comments or documentation unless asked
+- Modify migration files that have already been run
+- Use synchronize: true in TypeORM config
+- Hardcode secrets or configuration values
+- Delete or weaken existing tests
