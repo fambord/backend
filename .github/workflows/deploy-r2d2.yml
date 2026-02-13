@@ -1,0 +1,37 @@
+name: Deploy to R2D2
+
+on:
+  push:
+    branches: [r2d2]
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    environment: r2d2
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Create .env
+        run: |
+          cat <<EOF > .env
+          NODE_ENV=production
+          PORT=${{ secrets.PORT }}
+          DB_HOST=${{ secrets.DB_HOST }}
+          DB_PORT=${{ secrets.DB_PORT }}
+          DB_USERNAME=${{ secrets.DB_USERNAME }}
+          DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+          DB_NAME=${{ secrets.DB_NAME }}
+          JWT_SECRET=${{ secrets.JWT_SECRET }}
+          JWT_EXPIRATION=${{ secrets.JWT_EXPIRATION }}
+          ALLOWANCE_POINTS_PER_DOLLAR=${{ secrets.ALLOWANCE_POINTS_PER_DOLLAR }}
+          EOF
+
+      - run: npm ci
+      - run: npm run build
+      - run: npm run migration:run:prod
+      - run: pm2 restart fambord-api || pm2 start dist/main.js --name fambord-api
